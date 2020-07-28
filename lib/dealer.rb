@@ -3,6 +3,7 @@ class Dealer < ActiveRecord::Base
 
     def buy_vehicle(vehicle)
         vehicle.update(owner: self)
+        self.account_balance - vehicle.price
     end
 
     def sell_vehicle(vehicle, buyer)
