@@ -28,15 +28,15 @@ ActiveRecord::Schema.define(version: 2020_07_28_163020) do
   end
 
   create_table "vehicles", force: :cascade do |t|
-    t.string "name"
+    t.string "model"
     t.string "make"
     t.integer "year"
     t.integer "milage"
-    t.string "drivable_type"
-    t.integer "drivable_id"
+    t.string "owner_type"
+    t.integer "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["drivable_type", "drivable_id"], name: "index_vehicles_on_drivable_type_and_drivable_id"
+    t.index ["owner_type", "owner_id"], name: "index_vehicles_on_owner_type_and_owner_id"
   end
 
 end

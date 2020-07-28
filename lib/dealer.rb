@@ -1,3 +1,3 @@
 class Dealer < ActiveRecord::Base
-    has_many :vehicles, as: :drivable
+    has_many :vehicles, as: :owner
 end
