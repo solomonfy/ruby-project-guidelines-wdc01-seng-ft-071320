@@ -31,3 +31,6 @@ altima = Vehicle.create(model: "Altima", make: "Nissan", year: 2014, milage: 832
 
 pilot = Vehicle.create(model: "Pilot", make: "Honda", year: 2020, milage: 325, owner: honda, model_number: 4001)
 civic = Vehicle.create(model: "Civic", make: "Honda", year: 2020, milage: 25, owner: honda, model_number:4004)
+
+
+

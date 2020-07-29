@@ -77,7 +77,7 @@ def print_menu
     puts (" 1. ") + "Buy a car from manufacturer"
     puts (" 2. ") + "Sell a car to a buyer"
     puts (" 3. ") + "Check inventory"
-    puts (" 4. ") + "Inventory list"
+    puts (" 4. ") + "<><><><><><><><>><><"
     puts (" 5. ") + "Check account balance"
     puts (" 6. ") + "<><><><><><><><><>"
     puts (" 7. ") + "<><><><><><><><><>"
@@ -85,6 +85,8 @@ def print_menu
     puts ""
     input = gets.chomp
 end
+
+# Helper methods for buy a car from manufacturer
 
 def select_manufacturer
     puts "Select a manufacturer: "
@@ -95,18 +97,37 @@ def get_a_manufacturer
     @this_manufacturer = Manufacturer.find_by(name: select_manufacturer)
 end
 
-
 def select_vehicle
     puts "Choose a vehicle"
     puts @this_manufacturer.manufacturer_inventory_list
-    vehicle_model = gets.chomp
-    
+    vehicle_model = gets.chomp 
 end
 
-def get_a_vehicle
+def get_vehicle_from_manufacturer
     @this_vehicle = Vehicle.find_by(model: select_vehicle)
 end
 
+
+# Helper methods for sell a vehicle to buyer
+
+def enter_buyer
+    puts "Enter a buyer"
+    buyer_name = gets.chomp
+end
+
+def get_a_buyer
+    @this_buyer = Buyer.find_or_create_by(name: enter_buyer)
+end
+
+def select_vehicle_for_buyer
+    puts "Choose a vehicle"
+    puts @this_dealer.inventory_list
+    vehicle_model = gets.chomp
+end
+
+def get_vehicle_from_dealer
+    @this_vehicle = Vehicle.find_by(model: select_vehicle_for_buyer)
+end
 
 
 
@@ -114,16 +135,18 @@ def menu_nav(input)
       case input
         when "1"
             get_a_manufacturer
-            get_a_vehicle
+            get_vehicle_from_manufacturer
             @this_dealer.buy_vehicle_from_manufacturer(@this_vehicle)
-            puts "Your purchase of a #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete"
+                puts "Your purchase of a #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete"
         when "2"
-            @this_dealer.sell_vehicle_to_buyer
-            #puts "@this_buyer.name"
+            get_a_buyer
+            get_vehicle_from_dealer
+            @this_dealer.sell_vehicle_to_buyer(@this_vehicle, @this_buyer)
+                puts "#{@this_buyer.name} bought #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} from #{@this_dealer.name}"
         when "3"
-            print @this_dealer.inventory
-        when "4"
             @this_dealer.inventory_list
+        when "4"
+             
         when "5"
             # Student.have_pets_string
         when "6"

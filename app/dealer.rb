@@ -19,16 +19,22 @@ class Dealer < ActiveRecord::Base
     end
 
     def inventory
-        self.vehicles
+        if self.vehicles.count != 0
+            puts self.vehicles
+        else
+            puts "No vehicles"
+        end
     end
 
     def inventory_count
-        self.inventory.count
+        self.vehicles.count
     end
 
     def inventory_list
-        self.inventory.map do |vehicle|
-            puts "#{vehicle.year} #{vehicle.make} #{vehicle.model}\n"
+        if self.inventory_count > 0
+            self.vehicles.map {|vehicle| puts "#{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
+        else
+            puts "No vehicles"
         end
     end
 
