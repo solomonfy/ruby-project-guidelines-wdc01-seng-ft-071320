@@ -2,14 +2,15 @@ require 'rainbow'
 
 def run
     greet
-    account_login
-    intro
-    input = ""
+    prompt_login
+    get_a_dealer
+#     intro
+#     input = ""
     
-    while input != "8"
-    input = print_menu
-    menu_nav(input)
-    end
+#     while input != "8"
+#     input = print_menu
+#     menu_nav(input)
+#     end
   end
     
 
@@ -49,18 +50,19 @@ def greet
 end
 
 
-def account_login
+def prompt_login
     puts "Log in to your account: "
-    prompt = TTY::Prompt.new
-    @dealer_name = prompt.ask("Name: ")
+end
+
+def account_login
+    username = gets.chomp
 end
 
 def get_a_dealer
-    Dealer.all.find do |dealer|
-        if dealer.name.gsub(/ /, "") != account_login.to_s.gsub(/ /, "")
-            Dealer.create(name: account_login)
-        end
-    end
+    @this_dealer = Dealer.find_or_create_by(name: account_login)
+    puts "Welcome #{@this_dealer.name}"
+        # if dealer.name .gsub(/ /, "").downcase != account_login.to_s.gsub(/ /, "").downcase
+    binding.pry
 end
 
 
@@ -92,7 +94,7 @@ end
 def menu_nav(input)
       case input
         when "1"
-            Dealer.buy_vehicle_from_manufacturer
+            get_a_dealer.buy_vehicle_from_manufacturer
         when "2"
             Dealer.sell_vehicle_to_buyer
         when "3"

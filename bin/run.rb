@@ -1,7 +1,7 @@
 require_relative '../config/environment'
 
 
-# run
+run
 
 #puts "HELLO WORLD"
 # Dealer.first.buy_vehicle_from_manufacturer(Vehicle.third)
@@ -9,8 +9,8 @@ require_relative '../config/environment'
 # Dealer.first.inventory_names
 
 # Dealer.last.account_login
-Dealer.last.buy_vehicle_from_manufacturer(Vehicle.third)
-binding.pry
+# Dealer.last.buy_vehicle_from_manufacturer(Vehicle.third)
+# binding.pry
 
 0
 
