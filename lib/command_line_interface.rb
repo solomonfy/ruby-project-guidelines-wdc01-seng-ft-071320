@@ -1,5 +1,8 @@
+require 'rainbow'
+
 def run
     greet
+    account_login
     intro
     input = ""
     
@@ -11,41 +14,74 @@ def run
     
 
 def greet
+
+    # bar = TTY::ProgressBar.new("Loading [:bar]", total: 30)
+
+    # 30.times do
+    #     sleep(0.1)
+    #     bar.advance(1)
+    # end
+
     @time = Time.new
-    if @time.hour >= 5 && @time.hour < 12 && @time.min < 60 # 5 - 11:59
+    if @time.hour >= 5 && @time.hour < 12 && @time.min < 60
         puts ""
-        puts "        *** Good morning ***"
-    elsif @time.hour >= 12 && @time.hour < 18 && @time.min < 60 #12 - 17:59
+        puts         Rainbow("\n\n                  *** Good morning ***\n\n").green.bold
+    elsif @time.hour >= 12 && @time.hour < 18 && @time.min < 60
         puts ""
-        puts "        *** Good afternoon ***"
-    elsif @time.hour >= 18 && @time.hour < 24 && @time.min < 60 || @time.hour >= 0 && @time.hour < 5 && @time.min < 60 #18 - 23:59
+        puts         Rainbow("\n\n                  *** Good afternoon ***\n\n").green.bold
+    elsif @time.hour >= 18 && @time.hour < 24 && @time.min < 60 || @time.hour >= 0 && @time.hour < 5 && @time.min < 60
         puts ""
-        puts "        *** Good evening ***"
+        puts         Rainbow("\n\n                  *** Good evening ***\n\n").green.bold
     end
-    puts "\nWelcome to the Car-Market App!"
+
+          puts"  ░█──░█ ░█▀▀▀ ░█─── ░█▀▀█ ░█▀▀▀█ ░█▀▄▀█ ░█▀▀▀ 　 ▀▀█▀▀ ░█▀▀▀█ "
+          puts"  ░█░█░█ ░█▀▀▀ ░█─── ░█─── ░█──░█ ░█░█░█ ░█▀▀▀ 　 ─░█── ░█──░█ "
+          puts"  ░█▄▀▄█ ░█▄▄▄ ░█▄▄█ ░█▄▄█ ░█▄▄▄█ ░█──░█ ░█▄▄▄ 　 ─░█── ░█▄▄▄█ \n\n"
+            
+        puts"   ░█▀▀█ ─█▀▀█ ░█▀▀█ ── ░█▀▄▀█ ─█▀▀█ ░█▀▀█ ░█─▄▀ ░█▀▀▀ ▀▀█▀▀ "
+        puts"   ░█─── ░█▄▄█ ░█▄▄▀ ▀▀ ░█░█░█ ░█▄▄█ ░█▄▄▀ ░█▀▄─ ░█▀▀▀ ─░█── "
+        puts"   ░█▄▄█ ░█─░█ ░█─░█ ── ░█──░█ ░█─░█ ░█─░█ ░█─░█ ░█▄▄▄ ─░█── \n\n"
+                    
+           puts"                     ─█▀▀█ ░█▀▀█ ░█▀▀█ "
+           puts"                     ░█▄▄█ ░█▄▄█ ░█▄▄█ "
+           puts"                     ░█─░█ ░█─── ░█───  "
+
 end
 
 
+def account_login
+    puts "Log in to your account: "
+    prompt = TTY::Prompt.new
+    @dealer_name = prompt.ask("Name: ")
+end
+
+def get_a_dealer
+    Dealer.all.find do |dealer|
+        if dealer.name.gsub(/ /, "") != account_login.to_s.gsub(/ /, "")
+            Dealer.create(name: account_login)
+        end
+    end
+end
+
 
 def intro
-    puts 'This App is used to keep track of car dealer company activities.'
-    puts ""
-    puts "()" *50
+    puts "\n\n\nThis App is used to keep track of car dealer company activities."
     puts ""
 end
 
 
 def print_menu
     puts ""
-    puts "Navigation Menu - choose an option"
+    menu = Artii::Base.new
+    puts Rainbow(menu.asciify("Menu - choose an option")).green
     puts ""
-    puts (" 1. ") + "The most common personality!"
-    puts (" 2. ") + "The least common personality!"
-    puts (" 3. ") + "Students who have siblings!"
-    puts (" 4. ") + "Students who have no siblings!"
-    puts (" 5. ") + "Students who have pets!"
-    puts (" 6. ") + "Students who have no pets!"
-    puts (" 7. ") + "Majority? Have pets or no pets!"
+    puts (" 1. ") + "Buy a car from manufacturer"
+    puts (" 2. ") + "Sell a car to a buyer"
+    puts (" 3. ") + "Check total inventory"
+    puts (" 4. ") + "Purchased vehicles"
+    puts (" 5. ") + "<><><><><><><><><>"
+    puts (" 6. ") + "<><><><><><><><><>"
+    puts (" 7. ") + "<><><><><><><><><>"
     puts (" 8. ") + "Exit"
     puts ""
     input = gets.chomp
@@ -56,23 +92,23 @@ end
 def menu_nav(input)
       case input
         when "1"
-            Personality.most_common_personality
+            Dealer.buy_vehicle_from_manufacturer
         when "2"
-            Personality.least_common_personality
+            Dealer.sell_vehicle_to_buyer
         when "3"
-            Student.have_siblings
+            Dealer.total_inventory
         when "4"
-            Student.have_no_siblings
+            Dealer.purchased_vehicles_names
         when "5"
-            Student.have_pets_string
+            # Student.have_pets_string
         when "6"
-            Student.have_no_pets_string
+            # Student.have_no_pets_string
         when "7"
-            Student.pets_majority
+            # Student.pets_majority
         when "8"
             goodbye = Artii::Base.new
-            puts Rainbow(goodbye.asciify("Good bye!")).yellow
+            puts Rainbow(goodbye.asciify("Good bye  !")).red
         else
-          puts "That option does not exist. Please select a number from 1 - 9 "
+          puts "That option does not exist. Please select a number from 1 - 8 "
       end
 end

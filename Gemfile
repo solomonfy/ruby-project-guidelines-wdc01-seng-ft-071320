@@ -11,3 +11,8 @@ gem 'rake'
 gem 'database_cleaner'
 gem 'require_all'
 gem 'faker'
+gem 'artii', '~> 2.1', '>= 2.1.2'
+gem 'rainbow', '~> 3.0'
+
+gem "tty-prompt"
+gem "tty-progressbar"
