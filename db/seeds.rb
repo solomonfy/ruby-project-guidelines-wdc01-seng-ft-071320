@@ -12,14 +12,14 @@ matine = Buyer.create(name: "Matine")
 solomon = Buyer.create(name: "Solomon")
 
 
-enterprise = Dealer.create(name: "Enterprise", inventory: 457, account_balance: 2781425)
-penske = Dealer.create(name: "Penske", inventory: 857, account_balance: 4087295)
-carvana = Dealer.create(name: "Carvana", inventory: 557, account_balance: 3142863)
-car_max = Dealer.create(name: "Car Max", inventory: 123, account_balance: 1445239)
+enterprise = Dealer.create(name: "Enterprise", account_balance: 2781425)
+penske = Dealer.create(name: "Penske", account_balance: 4087295)
+carvana = Dealer.create(name: "Carvana", account_balance: 3142863)
+car_max = Dealer.create(name: "Car Max", account_balance: 1445239)
 
-toyota = Manufacturer.create(name: "Toyota", inventory: 11340)
-honda = Manufacturer.create(name: "Honda", inventory: 24108)
-nissan = Manufacturer.create(name: "Nissan", inventory: 31985)
+toyota = Manufacturer.create(name: "Toyota")
+honda = Manufacturer.create(name: "Honda")
+nissan = Manufacturer.create(name: "Nissan")
 
 yaris = Vehicle.create(model: "Yaris", make: "Toyota", year: 2020, milage: 423, owner: toyota, model_number: 10)
 rav4 = Vehicle.create(model: "Rav4", make: "Toyota", year: 2019, milage: 124, owner: toyota, model_number: 11)

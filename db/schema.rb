@@ -18,13 +18,11 @@ ActiveRecord::Schema.define(version: 2020_07_28_220628) do
 
   create_table "dealers", force: :cascade do |t|
     t.string "name"
-    t.integer "inventory"
     t.integer "account_balance"
   end
 
   create_table "manufacturers", force: :cascade do |t|
     t.string "name"
-    t.integer "inventory"
   end
 
   create_table "vehicles", force: :cascade do |t|

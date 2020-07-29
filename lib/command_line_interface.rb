@@ -2,16 +2,15 @@ require 'rainbow'
 
 def run
     greet
-    prompt_login
     get_a_dealer
-#     intro
-#     input = ""
+    intro
+    input = ""
     
-#     while input != "8"
-#     input = print_menu
-#     menu_nav(input)
-#     end
-  end
+    while input != "8"
+        input = print_menu
+        menu_nav(input)
+    end
+end
     
 
 def greet
@@ -50,11 +49,9 @@ def greet
 end
 
 
-def prompt_login
-    puts "Log in to your account: "
-end
 
 def account_login
+    puts "Log in to your account: "
     username = gets.chomp
 end
 
@@ -62,12 +59,12 @@ def get_a_dealer
     @this_dealer = Dealer.find_or_create_by(name: account_login)
     puts "Welcome #{@this_dealer.name}"
         # if dealer.name .gsub(/ /, "").downcase != account_login.to_s.gsub(/ /, "").downcase
-    binding.pry
+    @this_dealer
 end
 
 
 def intro
-    puts "\n\n\nThis App is used to keep track of car dealer company activities."
+    puts "\n\n\nThis App is used to keep track of your company's activities."
     puts ""
 end
 
@@ -79,9 +76,9 @@ def print_menu
     puts ""
     puts (" 1. ") + "Buy a car from manufacturer"
     puts (" 2. ") + "Sell a car to a buyer"
-    puts (" 3. ") + "Check total inventory"
-    puts (" 4. ") + "Purchased vehicles"
-    puts (" 5. ") + "<><><><><><><><><>"
+    puts (" 3. ") + "Check inventory"
+    puts (" 4. ") + "Inventory list"
+    puts (" 5. ") + "Check account balance"
     puts (" 6. ") + "<><><><><><><><><>"
     puts (" 7. ") + "<><><><><><><><><>"
     puts (" 8. ") + "Exit"
@@ -89,18 +86,44 @@ def print_menu
     input = gets.chomp
 end
 
+def select_manufacturer
+    puts "Select a manufacturer: "
+    manufacturer = gets.chomp
+end
+
+def get_a_manufacturer
+    @this_manufacturer = Manufacturer.find_by(name: select_manufacturer)
+end
+
+
+def select_vehicle
+    puts "Choose a vehicle"
+    puts @this_manufacturer.manufacturer_inventory_list
+    vehicle_model = gets.chomp
+    
+end
+
+def get_a_vehicle
+    @this_vehicle = Vehicle.find_by(model: select_vehicle)
+end
+
+
 
 
 def menu_nav(input)
       case input
         when "1"
-            get_a_dealer.buy_vehicle_from_manufacturer
+            get_a_manufacturer
+            get_a_vehicle
+            @this_dealer.buy_vehicle_from_manufacturer(@this_vehicle)
+            puts "Your purchase of a #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete"
         when "2"
-            Dealer.sell_vehicle_to_buyer
+            @this_dealer.sell_vehicle_to_buyer
+            #puts "@this_buyer.name"
         when "3"
-            Dealer.total_inventory
+            print @this_dealer.inventory
         when "4"
-            Dealer.purchased_vehicles_names
+            @this_dealer.inventory_list
         when "5"
             # Student.have_pets_string
         when "6"

@@ -3,40 +3,32 @@ class Dealer < ActiveRecord::Base
 
     def initialize(attributes=nil)
         super(attributes)
-        self.inventory = 50
         self.account_balance = 500000
     end
 
     def buy_vehicle_from_manufacturer(vehicle)
-        vehicle.owner.inventory -= 1
         vehicle.update(owner: self)
-        self.inventory += 1
         self.account_balance -= vehicle.price
         self.save
     end
     
     def sell_vehicle_to_buyer(vehicle, buyer)
         vehicle.update(owner: buyer)
-        self.inventory -= 1
         self.account_balance += (1.2 * vehicle.price)
         self.save
     end
 
-    def total_inventory
-        self.inventory
-    end
-
-    def purchased_vehicles
+    def inventory
         self.vehicles
     end
 
-    def purchased_vehicles_count
-        self.purchased_vehicles.count
+    def inventory_count
+        self.inventory.count
     end
 
-    def purchased_vehicles_names
-        self.purchased_vehicles.map do |vehicle|
-            puts "#{vehicle.year} #{vehicle.make} #{vehicle.model}"
+    def inventory_list
+        self.inventory.map do |vehicle|
+            puts "#{vehicle.year} #{vehicle.make} #{vehicle.model}\n"
         end
     end
 
