@@ -13,6 +13,9 @@ class Dealer < ActiveRecord::Base
     end
     
     def sell_vehicle_to_buyer(vehicle, buyer)
+        @sold_vehicles = []
+        @sold_vehicles << vehicle
+        @sold_vehicles.each {|vehicle| vehicle.save}
         vehicle.update(owner: buyer)
         self.account_balance += (1.2 * vehicle.price)
         self.vehicles.delete(vehicle)
@@ -41,7 +44,6 @@ class Dealer < ActiveRecord::Base
     
     def sold_vehicles
         @sold_vehicles
-        binding.pry
     end
 
     def sold_vehicles_list
@@ -49,7 +51,7 @@ class Dealer < ActiveRecord::Base
     end
 
     def most_sold_vehicle_by_model
-        # @sold_vehicles
+        sold_vehicles.max_by{|vehicle| vehicle.model}
     end
     
 end
