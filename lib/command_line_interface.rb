@@ -6,7 +6,7 @@ def run
     intro
     input = ""
     
-    while input != "8"
+    while input != "10"
         input = print_menu
         menu_nav(input)
     end
@@ -51,13 +51,13 @@ end
 
 
 def account_login
-    puts "Log in to your account: "
+    puts "\n\nLog in to your account: \n\n"
     username = gets.chomp
 end
 
 def get_a_dealer
     @this_dealer = Dealer.find_or_create_by(name: account_login)
-    puts "Welcome #{@this_dealer.name}"
+    puts "\n\nWelcome #{@this_dealer.name} !"
         # if dealer.name .gsub(/ /, "").downcase != account_login.to_s.gsub(/ /, "").downcase
     @this_dealer
 end
@@ -77,11 +77,13 @@ def print_menu
     puts (" 1. ") + "Buy a car from manufacturer"
     puts (" 2. ") + "Sell a car to a buyer"
     puts (" 3. ") + "Check inventory"
-    puts (" 4. ") + "<><><><><><><><>><><"
+    puts (" 4. ") + "Sold vehicles"
     puts (" 5. ") + "Check account balance"
-    puts (" 6. ") + "<><><><><><><><><>"
-    puts (" 7. ") + "<><><><><><><><><>"
-    puts (" 8. ") + "Exit"
+    puts (" 6. ") + "Accout summary: profit"
+    puts (" 7. ") + "Returned vehicles"
+    puts (" 8. ") + "Change vehicle prices"
+    puts (" 9. ") + "All suppliers(manufacturers)"
+    puts (" 10. ") + "Exit"
     puts ""
     input = gets.chomp
 end
@@ -89,7 +91,7 @@ end
 # Helper methods for buy a car from manufacturer
 
 def select_manufacturer
-    puts "Select a manufacturer: "
+    puts "\n\nSelect a manufacturer: "
     manufacturer = gets.chomp
 end
 
@@ -98,20 +100,20 @@ def get_a_manufacturer
 end
 
 def select_vehicle
-    puts "Choose a vehicle"
+    puts "\n\nChoose a number"
     puts @this_manufacturer.manufacturer_inventory_list
-    vehicle_model = gets.chomp 
+    man_vehicle_index = gets.chomp.to_i
 end
 
 def get_vehicle_from_manufacturer
-    @this_vehicle = Vehicle.find_by(model: select_vehicle)
+    @this_vehicle = @this_manufacturer.vehicles[select_vehicle - 1]
 end
 
 
 # Helper methods for sell a vehicle to buyer
 
 def enter_buyer
-    puts "Enter a buyer"
+    puts "\n\nEnter a buyer"
     buyer_name = gets.chomp
 end
 
@@ -120,13 +122,18 @@ def get_a_buyer
 end
 
 def select_vehicle_for_buyer
-    puts "Choose a vehicle"
+    puts "\nChoose a vehicle\n"
     puts @this_dealer.inventory_list
-    vehicle_model = gets.chomp
+    dealer_vehicle_index = gets.chomp.to_i
 end
 
 def get_vehicle_from_dealer
-    @this_vehicle = Vehicle.find_by(model: select_vehicle_for_buyer)
+    # if @vehicle_model == Vehicle.find_by(model: select_vehicle_for_buyer)
+        @this_vehicle = @this_dealer.vehicles[select_vehicle_for_buyer - 1]
+    # else
+    #     puts "That car does not exist, please try again!"
+    #     select_vehicle_for_buyer
+    # end
 end
 
 
@@ -137,26 +144,34 @@ def menu_nav(input)
             get_a_manufacturer
             get_vehicle_from_manufacturer
             @this_dealer.buy_vehicle_from_manufacturer(@this_vehicle)
-                puts "Your purchase of a #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete"
+                puts "\n\nYour purchase of a #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete!"
         when "2"
-            get_a_buyer
-            get_vehicle_from_dealer
-            @this_dealer.sell_vehicle_to_buyer(@this_vehicle, @this_buyer)
-                puts "#{@this_buyer.name} bought #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} from #{@this_dealer.name}"
+            if @this_dealer.vehicles.count > 0
+                get_a_buyer
+                get_vehicle_from_dealer
+                @this_dealer.sell_vehicle_to_buyer(@this_vehicle, @this_buyer)
+                puts "\n#{@this_buyer.name} bought #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} from #{@this_dealer.name}!"
+            else
+                puts "\nYou don't have a vehicle to sell, please stock a vehicle from your suppliers!"
+            end
         when "3"
             @this_dealer.inventory_list
         when "4"
-             
+            
         when "5"
-            # Student.have_pets_string
+            # 
         when "6"
-            # Student.have_no_pets_string
+            # 
         when "7"
-            # Student.pets_majority
+            # 
         when "8"
+            # 
+        when "9"
+            # 
+        when "10"
             goodbye = Artii::Base.new
             puts Rainbow(goodbye.asciify("Good bye  !")).red
         else
-          puts "That option does not exist. Please select a number from 1 - 8 "
+          puts "That option does not exist. Please select again"
       end
 end

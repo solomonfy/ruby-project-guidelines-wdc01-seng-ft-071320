@@ -22,24 +22,24 @@ class Dealer < ActiveRecord::Base
         if self.vehicles.count != 0
             puts self.vehicles
         else
-            puts "No vehicles"
+            puts "You don't have vehicle in stock, please buy vehicle(s) from your suppliers!"
         end
     end
-
+    
     def inventory_count
         self.vehicles.count
     end
-
+    
     def inventory_list
         if self.inventory_count > 0
-            self.vehicles.map {|vehicle| puts "#{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
+            self.vehicles.map.with_index(1) {|vehicle, index| print "#{index}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
         else
-            puts "No vehicles"
+            puts "You don't have vehicle in stock, please buy vehicle(s) from your suppliers!"
         end
     end
 
-    def sold_vehicle
-        sold_cars = Vehicle.where(owner_type: "Buyer")
+    def dealer_sold_vehicles
+
     end
 
     def sold_vehicle_by_model
