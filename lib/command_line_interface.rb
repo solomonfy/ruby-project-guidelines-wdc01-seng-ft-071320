@@ -159,7 +159,7 @@ def menu_nav(input)
         when "4"
             @this_dealer.sold_vehicles_list
         when "5"
-            # 
+            puts @this_dealer.account_balance
         when "6"
             # 
         when "7"

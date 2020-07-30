@@ -23,11 +23,7 @@ class Dealer < ActiveRecord::Base
     end
 
     def inventory
-        if self.vehicles.count != 0
-            puts self.vehicles
-        else
-            puts "You don't have vehicle in stock, please buy vehicle(s) from your suppliers!"
-        end
+        puts self.vehicles
     end
     
     def inventory_count
