@@ -1,11 +1,11 @@
 class Dealer < ActiveRecord::Base
     has_many :vehicles, as: :owner
-
+    
     def initialize(attributes=nil)
         super(attributes)
         self.account_balance = 500000
     end
-
+    
     def buy_vehicle_from_manufacturer(vehicle)
         vehicle.update(owner: self)
         self.account_balance -= vehicle.price
@@ -15,6 +15,7 @@ class Dealer < ActiveRecord::Base
     def sell_vehicle_to_buyer(vehicle, buyer)
         vehicle.update(owner: buyer)
         self.account_balance += (1.2 * vehicle.price)
+        self.vehicles.delete(vehicle)
         self.save
     end
 
@@ -37,13 +38,18 @@ class Dealer < ActiveRecord::Base
             puts "You don't have vehicle in stock, please buy vehicle(s) from your suppliers!"
         end
     end
-
-    def dealer_sold_vehicles
-
+    
+    def sold_vehicles
+        @sold_vehicles
+        binding.pry
     end
 
-    def sold_vehicle_by_model
-        sold_vehicle.select {|car| car.model}
+    def sold_vehicles_list
+        self.sold_vehicles.map.with_index(1) {|vehicle, index| print "#{index}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
     end
 
+    def most_sold_vehicle_by_model
+        # @sold_vehicles
+    end
+    
 end

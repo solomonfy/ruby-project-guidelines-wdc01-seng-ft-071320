@@ -92,11 +92,12 @@ end
 
 def select_manufacturer
     puts "\n\nSelect a manufacturer: "
-    manufacturer = gets.chomp
+    puts Manufacturer.manufacturer_list
+    manufacturer_index = gets.chomp.to_i
 end
 
 def get_a_manufacturer
-    @this_manufacturer = Manufacturer.find_by(name: select_manufacturer)
+    @this_manufacturer = Manufacturer.all[select_manufacturer - 1]
 end
 
 def select_vehicle
@@ -128,7 +129,6 @@ def select_vehicle_for_buyer
 end
 
 def get_vehicle_from_dealer
-    # if @vehicle_model == Vehicle.find_by(model: select_vehicle_for_buyer)
         @this_vehicle = @this_dealer.vehicles[select_vehicle_for_buyer - 1]
     # else
     #     puts "That car does not exist, please try again!"
@@ -157,7 +157,7 @@ def menu_nav(input)
         when "3"
             @this_dealer.inventory_list
         when "4"
-            
+            @this_dealer.sold_vehicles_list
         when "5"
             # 
         when "6"

@@ -17,9 +17,10 @@ class Manufacturer < ActiveRecord::Base
 
     def manufacturer_inventory_list
         self.inventory.map.with_index(1) {|vehicle, index| print "#{index}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
-        
-        # self.inventory.map{|vehicle| print "#{vehicle.id}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
     end
-
+    
+    def self.manufacturer_list
+        self.all.map.with_index(1) {|man, index| print "#{index}. #{man.name}\n"}
+    end
 
 end
