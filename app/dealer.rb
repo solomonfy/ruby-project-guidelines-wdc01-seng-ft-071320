@@ -9,7 +9,6 @@ class Dealer < ActiveRecord::Base
     def buy_vehicle_from_manufacturer(vehicle)
         vehicle.update(owner: self)
         self.account_balance -= vehicle.price
-        self.vehicles << vehicle
         self.save
     end
     
