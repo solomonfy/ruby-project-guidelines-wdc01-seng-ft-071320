@@ -10,7 +10,9 @@ class Dealer < ActiveRecord::Base
     
     def buy_vehicle_from_manufacturer(vehicle)
         vehicle.update(owner: self)
+        #binding.pry
         self.account_balance -= vehicle.price
+        self.vehicles << vehicle
         self.save
     end
     
@@ -53,8 +55,12 @@ class Dealer < ActiveRecord::Base
         self.sold_vehicles.map.with_index(1) {|vehicle, index| print "#{index}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
     end
     
+    def old_car
+        self.vehicles.min_by {|v| v.year}
+    end
+    
     def dealer_oldest_vehicle
-        old_car = self.vehicles.min_by {|v| v.year} #&& self.vehicles.max_by {|v| v.milage}
+        # old_car = self.vehicles.min_by {|v| v.year}
         "Year: #{old_car.year}, Make: #{old_car.make}, Model: #{old_car.model}, Current selling price: $ #{old_car.price}"
     end
 

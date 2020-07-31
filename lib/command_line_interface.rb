@@ -53,10 +53,10 @@ def account_login
     username = gets.chomp
 end
 
-# Dealer.find{|d| d.name.downcase.gsub(/ /, '') == account_login.downcase.gsub(/ /, '')}
+
 
 def get_a_dealer
-    @this_dealer = Dealer.find_or_create_by(name: account_login.capitalize)
+    @this_dealer = Dealer.find_or_create_by(name: account_login)
     puts "\n\nWelcome #{@this_dealer.name}!"
     @this_dealer
 end
@@ -79,7 +79,7 @@ def print_menu
     puts ("             4. ") + "See vehicle information"
     puts ("             5. ") + "Check account balance"
     puts ("             6. ") + "Current stock and total stock cost"
-    puts ("             7. ") + "Remove damaged vehicle"
+    puts ("             7. ") + "View oldest vehicle"
     puts ("             8. ") + "Change vehicle price"
     puts ("             9. ") + "All suppliers(manufacturers)"
     puts ("             10. ") + "Exit"
@@ -199,13 +199,17 @@ def menu_nav(input)
             puts "Total number of vehicles: #{@this_dealer.inventory_count}"
             puts "Total cost of current stock: $ #{@this_dealer.stock_account_balance}"
         when "7"
-            @this_dealer.dealer_oldest_vehicle
+            puts @this_dealer.dealer_oldest_vehicle
         when "8"
-            select_vehicle_from_dealer
-            get_vehicle_from_dealer
-            puts "#{@this_vehicle.all_info}"
-            choose_vehicle_price
-            change_vehicle_price(@this_vehicle, @new_price)
+            if @this_dealer.vehicles.count > 0
+                select_vehicle_from_dealer
+                get_vehicle_from_dealer
+                puts "#{@this_vehicle.all_info}"
+                choose_vehicle_price
+                change_vehicle_price(@this_vehicle, @new_price)
+            else
+                puts Rainbow("\nYou don't have a vehicle to change its price, please stock a vehicle from your suppliers!").red
+            end
             
         when "9"
             puts "List of supplier(s):"
