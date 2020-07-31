@@ -14,8 +14,8 @@ end
     
 
 def loading_bar
-    bar = TTY::ProgressBar.new("Please wait, completing transaction [:bar]", total: 60)
-    60.times do
+    bar = TTY::ProgressBar.new("Please wait, completing transaction [:bar]", total: 40)
+    40.times do
         sleep(0.1)
         bar.advance(1)
     end
@@ -80,7 +80,7 @@ def print_menu
     puts (" 4. ") + "See vehicle information"
     puts (" 5. ") + "Check account balance"
     puts (" 6. ") + "Current stock and total stock cost"
-    puts (" 7. ") + ""
+    puts (" 7. ") + "Oldest vehicle"
     puts (" 8. ") + "Change vehicle price"
     puts (" 9. ") + "All suppliers(manufacturers)"
     puts (" 10. ") + "Exit"
@@ -95,7 +95,7 @@ def select_manufacturer
     puts Manufacturer.manufacturer_list
     @manufacturer_index = gets.chomp.to_i
     if !@manufacturer_index.between?(1, Manufacturer.all.count)
-        puts "That option does not exist. Please select again"
+        puts Rainbow("Option does not exist, please select again!").red.bold
         select_manufacturer
     end
 end
@@ -109,7 +109,7 @@ def select_vehicle
     puts @this_manufacturer.manufacturer_inventory_list
     @man_vehicle_index = gets.chomp.to_i
     if !@man_vehicle_index.between?(1, @this_manufacturer.vehicles.count)
-        puts "That option does not exist. Please select again"
+        puts Rainbow("Option does not exist, please select again!").red.bold
         select_vehicle
     end
 end
@@ -135,13 +135,13 @@ def select_vehicle_from_dealer
     puts @this_dealer.inventory_list
     @dealer_vehicle_index = gets.chomp.to_i
     if !@dealer_vehicle_index.between?(1, @this_dealer.vehicles.count)
-        puts "That option does not exist. Please select again"
+        puts Rainbow("Option does not exist, please select again!").red.bold
         select_vehicle_from_dealer
     end
 end
 
 def get_vehicle_from_dealer
-        @this_vehicle = @this_dealer.vehicles[@dealer_vehicle_index - 1]
+    @this_vehicle = @this_dealer.vehicles[@dealer_vehicle_index - 1]
 end
 
 #Change vehicle price helper method
@@ -149,7 +149,7 @@ def choose_vehicle_price
     puts "Enter new price"
     @new_price = gets.chomp.to_i
     if !@new_price.is_a? Numeric
-        puts "This value is invalid. Please try again."
+        puts Rainbow("This value is invalid. Please try again.").red.bold
         choose_vehicle_price
     end
 end
@@ -161,6 +161,7 @@ end
 
 def menu_nav(input)
       case input
+
         when "1"
             select_manufacturer
             get_a_manufacturer
@@ -168,13 +169,15 @@ def menu_nav(input)
             get_vehicle_from_manufacturer
             @this_dealer.buy_vehicle_from_manufacturer(@this_vehicle)
             loading_bar
-            puts "\nYour purchase of #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete!"
+            puts Rainbow("\nYour purchase of #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete!").green.bold
+            
         when "2"
             if @this_dealer.vehicles.count > 0
                 get_a_buyer
                 select_vehicle_from_dealer
                 get_vehicle_from_dealer
                 @this_dealer.sell_vehicle_to_buyer(@this_vehicle, @this_buyer)
+                loading_bar
                 puts "\nBuyer name: #{@this_buyer.name}"
                 puts "Vehicle specifications: year - #{@this_vehicle.year}, make - #{@this_vehicle.make}, model number - #{@this_vehicle.model}"
                 puts "Selling price: #{@this_vehicle.dealer_selling_price}\n"
@@ -193,7 +196,7 @@ def menu_nav(input)
             puts "Total number of vehicles: #{@this_dealer.inventory_count}"
             puts "Total cost of current stock: $ #{@this_dealer.stock_account_balance}"
         when "7"
-            # 
+            puts @this_dealer.dealer_oldest_vehicle
         when "8"
             select_vehicle_from_dealer
             get_vehicle_from_dealer

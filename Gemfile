@@ -16,3 +16,4 @@ gem 'rainbow', '~> 3.0'
 
 gem "tty-prompt"
 gem "tty-progressbar"
+gem 'tty-font'

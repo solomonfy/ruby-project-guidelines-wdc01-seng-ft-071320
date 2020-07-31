@@ -1,3 +1,5 @@
+require "tty-prompt"
+
 class Dealer < ActiveRecord::Base
     has_many :vehicles, as: :owner
     
@@ -46,9 +48,14 @@ class Dealer < ActiveRecord::Base
     def sold_vehicles
         @sold_vehicles
     end
-
+    
     def sold_vehicles_list
         self.sold_vehicles.map.with_index(1) {|vehicle, index| print "#{index}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
+    end
+    
+    def dealer_oldest_vehicle
+        old_car = self.vehicles.min_by {|v| v.year} && self.vehicles.max_by {|v| v.milage}
+        "Year: #{old_car.year}, Make: #{old_car.make}, Model: #{old_car.model}, Current selling price: $ #{old_car.price}\n"
     end
 
     def most_sold_vehicle_by_model
