@@ -79,7 +79,7 @@ def print_menu
     puts ("             4. ") + "See vehicle information"
     puts ("             5. ") + "Check account balance"
     puts ("             6. ") + "Current stock and total stock cost"
-    puts ("             7. ") + "Oldest vehicle"
+    puts ("             7. ") + "Remove damaged vehicle"
     puts ("             8. ") + "Change vehicle price"
     puts ("             9. ") + "All suppliers(manufacturers)"
     puts ("             10. ") + "Exit"
@@ -199,7 +199,7 @@ def menu_nav(input)
             puts "Total number of vehicles: #{@this_dealer.inventory_count}"
             puts "Total cost of current stock: $ #{@this_dealer.stock_account_balance}"
         when "7"
-            puts @this_dealer.dealer_oldest_vehicle
+            @this_dealer.dealer_oldest_vehicle
         when "8"
             select_vehicle_from_dealer
             get_vehicle_from_dealer
