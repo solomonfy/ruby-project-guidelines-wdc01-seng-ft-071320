@@ -25,14 +25,11 @@ end
 def greet
     @time = Time.new
     if @time.hour >= 5 && @time.hour < 12 && @time.min < 60
-        puts ""
-        puts         Rainbow("\n\n                  *** Good morning ***\n\n").green.bold
+        puts         Rainbow("\n\n\n                  *** Good morning ***\n\n").green.bold
     elsif @time.hour >= 12 && @time.hour < 18 && @time.min < 60
-        puts ""
-        puts         Rainbow("\n\n                  *** Good afternoon ***\n\n").green.bold
+        puts         Rainbow("\n\n\n                  *** Good afternoon ***\n\n").green.bold
     elsif @time.hour >= 18 && @time.hour < 24 && @time.min < 60 || @time.hour >= 0 && @time.hour < 5 && @time.min < 60
-        puts ""
-        puts         Rainbow("\n\n                  *** Good evening ***\n\n").green.bold
+        puts         Rainbow("\n\n\n                  *** Good evening ***\n\n").green.bold
     end
 
           puts"  ░█──░█ ░█▀▀▀ ░█─── ░█▀▀█ ░█▀▀▀█ ░█▀▄▀█ ░█▀▀▀ 　 ▀▀█▀▀ ░█▀▀▀█ "
@@ -55,6 +52,8 @@ def account_login
     puts "\n\nLog in to your account: \n\n"
     username = gets.chomp
 end
+
+# Dealer.find{|d| d.name.downcase.gsub(/ /, '') == account_login.downcase.gsub(/ /, '')}
 
 def get_a_dealer
     @this_dealer = Dealer.find_or_create_by(name: account_login.capitalize)

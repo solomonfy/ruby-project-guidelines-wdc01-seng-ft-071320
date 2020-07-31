@@ -54,8 +54,8 @@ class Dealer < ActiveRecord::Base
     end
     
     def dealer_oldest_vehicle
-        old_car = self.vehicles.min_by {|v| v.year} && self.vehicles.max_by {|v| v.milage}
-        "Year: #{old_car.year}, Make: #{old_car.make}, Model: #{old_car.model}, Current selling price: $ #{old_car.price}\n"
+        old_car = self.vehicles.min_by {|v| v.year} #&& self.vehicles.max_by {|v| v.milage}
+        "Year: #{old_car.year}, Make: #{old_car.make}, Model: #{old_car.model}, Current selling price: $ #{old_car.price}"
     end
 
     def most_sold_vehicle_by_model

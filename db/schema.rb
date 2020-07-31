@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_220628) do
     t.integer "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "price"
+    t.float "price"
     t.index ["owner_type", "owner_id"], name: "index_vehicles_on_owner_type_and_owner_id"
   end
 
