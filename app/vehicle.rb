@@ -6,7 +6,7 @@ class Vehicle < ActiveRecord::Base
     end
 
     def dealer_selling_price
-        self.price = (1.2 * self.price)
+        self.price = (1.2 * self.price).round(2)
     end
 
     def all_info

@@ -39,7 +39,7 @@ class Dealer < ActiveRecord::Base
     
     def inventory_list
         if self.inventory_count > 0
-            self.vehicles.map.with_index(1) {|vehicle, index| print "#{index}. #{vehicle.year} #{vehicle.make} #{vehicle.model}\n"}
+            self.vehicles.map.with_index(1) {|vehicle, index| print "           #{index}. #{vehicle.make} #{vehicle.model} #{vehicle.year}\n"}
         else
             puts "You don't have vehicle in stock, please buy vehicle(s) from your suppliers!"
         end
