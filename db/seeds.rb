@@ -17,9 +17,9 @@ penske = Dealer.create(name: "Penske", account_balance: 4087295)
 carvana = Dealer.create(name: "Carvana", account_balance: 3142863)
 car_max = Dealer.create(name: "Car Max", account_balance: 1445239)
 
-toyota = Manufacturer.create(name: "Toyota")
-honda = Manufacturer.create(name: "Honda")
-nissan = Manufacturer.create(name: "Nissan")
+toyota = Manufacturer.create(name: "Toyota Motor Corporation")
+honda = Manufacturer.create(name: "Honda Motor Company, Ltd")
+nissan = Manufacturer.create(name: "Nissan Motor Company, Ltd")
 
 15.times do
     Vehicle.create(model: Faker::Vehicle.model(make_of_model: 'Honda'), make: "Honda", owner: honda, milage: Faker::Vehicle.mileage(min: 300, max: 500), year: Faker::Number.within(range: 2016..2020), price: Faker::Number.within(range: 9000..25000), model_number: Faker::Alphanumeric.alphanumeric(number: 6, min_alpha: 3, min_numeric: 3).upcase)

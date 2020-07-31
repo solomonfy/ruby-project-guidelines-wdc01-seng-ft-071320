@@ -13,15 +13,16 @@ def run
 end
     
 
+def loading_bar
+    bar = TTY::ProgressBar.new("Please wait, completing transaction [:bar]", total: 60)
+    60.times do
+        sleep(0.1)
+        bar.advance(1)
+    end
+end
+
+
 def greet
-
-    # bar = TTY::ProgressBar.new("Loading [:bar]", total: 30)
-
-    # 30.times do
-    #     sleep(0.1)
-    #     bar.advance(1)
-    # end
-
     @time = Time.new
     if @time.hour >= 5 && @time.hour < 12 && @time.min < 60
         puts ""
@@ -78,9 +79,9 @@ def print_menu
     puts (" 3. ") + "Check inventory"
     puts (" 4. ") + "See vehicle information"
     puts (" 5. ") + "Check account balance"
-    puts (" 6. ") + ""
+    puts (" 6. ") + "Current stock and total stock cost"
     puts (" 7. ") + ""
-    puts (" 8. ") + "Change vehicle prices"
+    puts (" 8. ") + "Change vehicle price"
     puts (" 9. ") + "All suppliers(manufacturers)"
     puts (" 10. ") + "Exit"
     puts ""
@@ -166,14 +167,17 @@ def menu_nav(input)
             select_vehicle
             get_vehicle_from_manufacturer
             @this_dealer.buy_vehicle_from_manufacturer(@this_vehicle)
-                puts "\n\nYour purchase of a #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete!"
+            loading_bar
+            puts "\nYour purchase of #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete!"
         when "2"
             if @this_dealer.vehicles.count > 0
                 get_a_buyer
                 select_vehicle_from_dealer
                 get_vehicle_from_dealer
                 @this_dealer.sell_vehicle_to_buyer(@this_vehicle, @this_buyer)
-                puts "\n#{@this_buyer.name} bought #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} from #{@this_dealer.name}!"
+                puts "\nBuyer name: #{@this_buyer.name}"
+                puts "Vehicle specifications: year - #{@this_vehicle.year}, make - #{@this_vehicle.make}, model number - #{@this_vehicle.model}"
+                puts "Selling price: #{@this_vehicle.dealer_selling_price}\n"
             else
                 puts "\nYou don't have a vehicle to sell, please stock a vehicle from your suppliers!"
             end
@@ -186,7 +190,8 @@ def menu_nav(input)
         when "5"
             puts "Your current balance is $#{@this_dealer.account_balance}"
         when "6"
-            # 
+            puts "Total number of vehicles: #{@this_dealer.inventory_count}"
+            puts "Total cost of current stock: $ #{@this_dealer.stock_account_balance}"
         when "7"
             # 
         when "8"

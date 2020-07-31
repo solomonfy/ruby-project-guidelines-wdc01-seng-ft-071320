@@ -12,6 +12,7 @@ class Dealer < ActiveRecord::Base
         self.save
     end
     
+
     def sell_vehicle_to_buyer(vehicle, buyer)
         @sold_vehicles = []
         @sold_vehicles << vehicle
@@ -23,7 +24,11 @@ class Dealer < ActiveRecord::Base
     end
 
     def inventory
-        puts self.vehicles
+        self.vehicles
+    end
+
+    def stock_account_balance
+        self.inventory.map {|vehicle| vehicle.price}.sum
     end
     
     def inventory_count
