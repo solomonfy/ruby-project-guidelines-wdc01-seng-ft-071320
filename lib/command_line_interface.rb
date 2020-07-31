@@ -199,7 +199,11 @@ def menu_nav(input)
             puts "Total number of vehicles: #{@this_dealer.inventory_count}"
             puts "Total cost of current stock: $ #{@this_dealer.stock_account_balance}"
         when "7"
-            puts @this_dealer.dealer_oldest_vehicle
+            if @this_dealer.vehicles.count > 0
+                puts @this_dealer.dealer_oldest_vehicle
+            else
+                puts Rainbow("\nYou don't have any vehicles, please stock a vehicle from your suppliers!").red
+            end
         when "8"
             if @this_dealer.vehicles.count > 0
                 select_vehicle_from_dealer
