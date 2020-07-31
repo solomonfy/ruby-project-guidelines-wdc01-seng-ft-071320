@@ -5,7 +5,7 @@ class CreateVehicles < ActiveRecord::Migration[5.2]
         t.string :make
         t.integer :year
         t.integer :milage
-        t.integer :model_number
+        t.string :model_number
         t.references :owner, polymorphic: true
         t.timestamps
       end

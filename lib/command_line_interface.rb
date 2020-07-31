@@ -56,15 +56,14 @@ def account_login
 end
 
 def get_a_dealer
-    @this_dealer = Dealer.find_or_create_by(name: account_login)
-    puts "\n\nWelcome #{@this_dealer.name} !"
-        # if dealer.name .gsub(/ /, "").downcase != account_login.to_s.gsub(/ /, "").downcase
+    @this_dealer = Dealer.find_or_create_by(name: account_login.capitalize)
+    puts "\n\nWelcome #{@this_dealer.name}!"
     @this_dealer
 end
 
 
 def intro
-    puts "\n\n\nThis App is used to keep track of your company's activities."
+    puts "\n\nThis App allows your company to keep track of activities."
     puts ""
 end
 
@@ -79,8 +78,8 @@ def print_menu
     puts (" 3. ") + "Check inventory"
     puts (" 4. ") + "See vehicle information"
     puts (" 5. ") + "Check account balance"
-    puts (" 6. ") + 
-    puts (" 7. ") + 
+    puts (" 6. ") + ""
+    puts (" 7. ") + ""
     puts (" 8. ") + "Change vehicle prices"
     puts (" 9. ") + "All suppliers(manufacturers)"
     puts (" 10. ") + "Exit"
@@ -95,7 +94,6 @@ def select_manufacturer
     puts Manufacturer.manufacturer_list
     @manufacturer_index = gets.chomp.to_i
     if !@manufacturer_index.between?(1, Manufacturer.all.count)
-        # 14.between?(10,20)
         puts "That option does not exist. Please select again"
         select_manufacturer
     end
@@ -106,7 +104,7 @@ def get_a_manufacturer
 end
 
 def select_vehicle
-    puts "\n\nChoose a number"
+    puts "\n\nChoose vehicle number:"
     puts @this_manufacturer.manufacturer_inventory_list
     @man_vehicle_index = gets.chomp.to_i
     if !@man_vehicle_index.between?(1, @this_manufacturer.vehicles.count)
@@ -123,12 +121,12 @@ end
 # Helper methods for sell a vehicle to buyer
 
 def enter_buyer
-    puts "\n\nEnter a buyer"
+    puts "\n\nEnter a buyer name:"
     buyer_name = gets.chomp
 end
 
 def get_a_buyer
-    @this_buyer = Buyer.find_or_create_by(name: enter_buyer)
+    @this_buyer = Buyer.find_or_create_by(name: enter_buyer.capitalize)
 end
 
 def select_vehicle_from_dealer
@@ -143,10 +141,6 @@ end
 
 def get_vehicle_from_dealer
         @this_vehicle = @this_dealer.vehicles[@dealer_vehicle_index - 1]
-    # else
-    #     puts "That car does not exist, please try again!"
-    #     select_vehicle_for_buyer
-    # end
 end
 
 #Change vehicle price helper method
@@ -161,7 +155,7 @@ end
 
 def change_vehicle_price(vehicle, price)
     vehicle.price = price
-    puts "#{vehicle.print_vehicle_info} now costs $#{price}"
+    puts "* The #{vehicle.print_vehicle_info} with model number '#{@this_vehicle.model_number}' price is now $#{price}."
 end
 
 def menu_nav(input)
@@ -198,6 +192,7 @@ def menu_nav(input)
         when "8"
             select_vehicle_from_dealer
             get_vehicle_from_dealer
+            puts "#{@this_vehicle.all_info}"
             choose_vehicle_price
             change_vehicle_price(@this_vehicle, @new_price)
             
