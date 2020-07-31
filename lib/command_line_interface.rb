@@ -1,6 +1,7 @@
 require 'rainbow'
 
 def run
+    system("clear")
     greet
     get_a_dealer
     intro
@@ -162,11 +163,13 @@ def menu_nav(input)
       case input
 
         when "1"
+            system("clear")
             select_manufacturer
             get_a_manufacturer
             select_vehicle
             get_vehicle_from_manufacturer
             @this_dealer.buy_vehicle_from_manufacturer(@this_vehicle)
+            system("clear")
             loading_bar
             puts Rainbow("\nYour purchase of #{@this_vehicle.year} #{@this_vehicle.make} #{@this_vehicle.model} is complete!").green.bold
             
@@ -176,6 +179,7 @@ def menu_nav(input)
                 select_vehicle_from_dealer
                 get_vehicle_from_dealer
                 @this_dealer.sell_vehicle_to_buyer(@this_vehicle, @this_buyer)
+                system("clear")
                 loading_bar
                 puts "\nBuyer name: #{@this_buyer.name}"
                 puts "Vehicle specifications: year - #{@this_vehicle.year}, make - #{@this_vehicle.make}, model number - #{@this_vehicle.model}"
@@ -219,6 +223,7 @@ def menu_nav(input)
             puts "List of supplier(s):"
             Manufacturer.manufacturer_list
         when "10"
+            system("clear")
             goodbye = Artii::Base.new
             puts Rainbow(goodbye.asciify("Good bye  !")).red
         else
