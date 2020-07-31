@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_220628) do
     t.string "make"
     t.integer "year"
     t.integer "milage"
-    t.integer "model_number"
+    t.string "model_number"
     t.string "owner_type"
     t.integer "owner_id"
     t.datetime "created_at", null: false

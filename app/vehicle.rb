@@ -1,11 +1,20 @@
 class Vehicle < ActiveRecord::Base
     belongs_to :owner, polymorphic: true
 
-    # def initialize(attributes=nil)
-    #     super(attributes)
-    #     self.price = 5000
-    #     self.year = 2010
-    #     self.milage = 100
-    # end
+    def print_vehicle_info
+        "#{self.year} #{self.make} #{self.model}"
+    end
 
+    def dealer_selling_price
+        self.price = (1.2 * self.price)
+    end
+
+    def all_info
+        puts "\nModel: #{self.model}"
+        puts "Manufacturer: #{self.make}"
+        puts "Year: #{self.year}"
+        puts "Milage: #{self.milage}"
+        puts "Price: #{self.price}"
+        puts "Model Number: #{self.model_number}"
+    end
 end
